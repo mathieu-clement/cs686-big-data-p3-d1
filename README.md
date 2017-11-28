@@ -32,9 +32,9 @@ The first thing to do is to create those accumulators:
 counts = []
 totals = []
 
-for i in range(1, 12):
+for i in range(0, 12):
     counts.append(sc.accumulator(0.0)) # accumulator starts with value 0
-for i in range(1, 12):
+for i in range(0, 12):
     totals.append(sc.accumulator(0.0))
 ```
 
@@ -49,7 +49,7 @@ def timestamp_to_month(ts):
 def update_accumulators(row):
     global totals
     global counts
-    m = timestamp_to_month(row.Timestamp)
+    m = timestamp_to_month(row.Timestamp) - 1
     humidity = row.relative_humidity_zerodegc_isotherm
     totals[m].add(humidity)
     counts[m].add(1)
@@ -61,7 +61,7 @@ for i in range(0,11):
     averages.append(totals[i].value / counts[i].value)
 ```
 
-Simple enough, right? Well... after working for 58 min, Spark stopped and barked at me, because my code contained a bug. The problem is that unlike Java in Python `datetime.month` returns 1-12 but arrays are 0-indexed. 
+Simple enough, right? Well... after working for 58 min, Spark stopped and barked at me, because my code contained a bug. The problem is that unlike Java in Python `datetime.month` returns 1-12 but arrays are 0-indexed, also I forgot that `range(1,12)` produces 1, 2, ... 9, 10. The nice thing about this of course being that the program crashes only when processing December data, i.e. the last 8 % of the dataset. Genius!
 But that's not the most important lesson here. That would be: test the code on the mini dataset first!
 Also, this "query" seems painfully slow. That's weird...
 

@@ -47,8 +47,6 @@ def timestamp_to_month(ts):
     return datetime.datetime.fromtimestamp(ts / 1e3).month
 
 def update_accumulators(row):
-    global totals
-    global counts
     m = timestamp_to_month(row.Timestamp) - 1
     humidity = row.relative_humidity_zerodegc_isotherm
     totals[m].add(humidity)

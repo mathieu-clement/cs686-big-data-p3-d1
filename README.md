@@ -26,7 +26,44 @@ We could do the same with Spark by using the *map* and *reduceByKey* transformat
 
 Another idea, which I'll explore here, is to use 2 x 12 Accumulators to implement the pseudo code above, thus avoiding any kind of reduce task altogether. The average is then trivially computed on the client. I am hoping that this should be rather fast.
   
+The first thing to do is to create those accumulators:
 
+```python
+counts = []
+totals = []
+
+for i in range(1, 12):
+    counts.append(sc.accumulator(0.0)) # accumulator starts with value 0
+for i in range(1, 12):
+    totals.append(sc.accumulator(0.0))
+```
+
+and then we simply iterate over all the data and update them:
+
+```python
+import datetime
+
+def timestamp_to_month(ts):
+    return datetime.datetime.fromtimestamp(ts / 1e3).month
+
+def update_accumulators(row):
+    global totals
+    global counts
+    m = timestamp_to_month(row.Timestamp)
+    humidity = row.relative_humidity_zerodegc_isotherm
+    totals[m].add(humidity)
+    counts[m].add(1)
+    
+df.foreach(update_accumulators)
+
+averages = []
+for i in range(0,11):
+    averages.append(totals[i].value / counts[i].value)
+```
+
+Simple enough, right? Well... after working for 58 min, Spark stopped and barked at me, because my code contained a bug. The problem is that unlike Java in Python `datetime.month` returns 1-12 but arrays are 0-indexed. 
+But that's not the most important lesson here. That would be: test the code on the mini dataset first!
+Also, this "query" seems painfully slow. That's weird...
 
 ### A Year of Travel
 

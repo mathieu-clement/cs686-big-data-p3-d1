@@ -116,11 +116,120 @@ Now, that's better. Although the numbers are not the same as in project 2, proba
 
 ### A Year of Travel
 
+Reminder:
+
+During my year of travel I would like to visit:
+
+  - dxfy: Halifax, Nova Scotia
+  - dk2y: Nassau, Bahamas
+  - dpky: Niaga Falls
+  - 9whp: Albuquerque
+  - 9xhv: Colorado Rockies
+  
+I had a few criteria such as the temperature and absence of snow.
+Also I would like to be visit each destination at least two days in a row.
+Here is how I implemented it with Spark:
+
+```python
+import numpy as np
+
+def day_of_year(ts):
+    return datetime.datetime.fromtimestamp(ts / 1e3).timetuple().tm_yday
+
+# [1, 3, 1, 7, 2, 9, 10] => [[1, 2, 3], [9, 10]]
+def consecutive(data):
+    data = np.unique(np.array(data))
+    # this line from https://stackoverflow.com/a/7353335/753136 :
+    arr = np.split(data, np.where(np.diff(data) != 1)[0]+1) 
+    return [x.tolist() for x in arr if np.size(x) > 1]
+
+prefixes = (
+            "dxfy", # Halifax, Nova Scotia
+            "dk2y", # Nassau, Bahamas
+            "dpxy", # Niagara Falls
+            "9whp", # Albuquerque
+            "9xhv"  # Rocky Mountain
+           )
+
+df.rdd\
+    .filter(lambda row: \
+        row.Geohash.startswith(prefixes) and
+        row.temperature_surface > 290 and 
+        row.temperature_surface < 301 and
+        row.snow_depth_surface < 0.01 and
+        row.categorical_rain_yes1_no0_surface == 0.0
+        )\
+    .map(lambda row: (row.Geohash[0:4], day_of_year(row.Timestamp)))\
+    .map(lambda tple: (tple[0], [ tple[1] ] ))\
+    .reduceByKey(lambda a,b: a + b)\
+    .map(lambda tple: (tple[0], consecutive(tple[1])))\
+    .filter(lambda tple: len(tple[1]) > 0)\
+    .sortByKey()\
+    .collect()
+```
+
+and this returned the following results:
+
+```
+[('9whp', [[202, 203, 204]]),
+ ('dk2y', [[7, 8, 9, 10], [46, 47], [322, 323], [343, 344]]),
+ ('dpxy', [[241, 242]])]
+ ```
+ 
+ in other words:
+ 
+ |Destination|Days|
+ |---|---|
+ |Albuquerque|July 21-23|
+ |Bahamas|January 7-10, February 15-16, November 18-19, December 9-10|
+ |Niagara Falls|August 29-30|
+ 
+ As you can see there haven't been two consecutive days in 2015 where Halifax and the Rockies were warm enough for me to go, so I'll just skip those destinations I guess...
+
 ### Hottest Temperature
 
 Here I used an SQL to find the maximum temperature, 329 K, at d59eknqv867b, a place about a 2.5 hour drive from Cancun, Mexico, which is also what I found in Project 2.
 
 ### Overview of my experience
+
+I wrote this section in the form of pros and cons for each framework, **regarding this question only.**
+
+#### Pros of Spark
+  
+   * Python API has all important features of the native Scala API
+   * Can just play around in a single Jupyter notebook, no need to create files, compile them, etc.
+   * All the code at the same place
+   * Easy to look at intermediary data ("What is my map function generating?")
+   * Fancy data sources, can use tables, I could access features by name easily
+   * SQL queries
+   * Builtin aggregate functions (stddev, mean, ...)
+   * Web UI is really cool to see what is going on
+
+#### Cons of Spark
+
+   * Complex API with tons of operations
+   * Input / Output of operations not always clear
+   * Not clear what approach is best, and faster
+   * Painful refactoring necessary if map functions needs to return multiple values
+   * Learning curve
+   * Operations are inflexible
+   * Unpleasant stacktraces
+   
+#### Pros of MapReduce
+
+   * Straightforward API
+   * Almost no Googling required
+   * Map and Reduce are actually quite flexible, can return 0, 1, n values
+   * Mapper and Reducer can emit another key easily
+   
+#### Cons of MapReduce
+
+    * Files, compilation, ...
+    * Java-only, Python supported only through pipes, so no access to API
+    * Requires a main() method (=> Job class)
+    * Cannot look at intermediary results
+    * Couldn't use my own Writable (Out of Memory errors)
+    * Comes with very little, might need boilerplate to do common operations
 
 ## Statistics for each feature
 

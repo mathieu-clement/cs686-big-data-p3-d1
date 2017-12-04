@@ -114,7 +114,7 @@ That's better!
 
 ### Hottest Temperature
 
-Here I used an SQL to find the maximum temperature, 329 K, which happens to be d59eknqv867b, a place about a 2.5 hour drive from Cancun, Mexico, which is also what I found in Project 2.
+Here I used an SQL to find the maximum temperature, 329 K, at d59eknqv867b, a place about a 2.5 hour drive from Cancun, Mexico, which is also what I found in Project 2.
 
 ### Overview of my experience
 

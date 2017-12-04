@@ -113,296 +113,296 @@ This is the code I used to generate the report below.
 
 ```
 Feature: albedo_surface
-Max value: 76.0
+Max value: 80.0
 Min value: 6.0
-Average: 18.07
-Std. dev.: 17.4802948221907
+Average: 15.875211110753401
+Std. dev.: 15.431209368902676
 
 Feature: categorical_freezing_rain_yes1_no0_surface
-Max value: 0.0
+Max value: 1.0
 Min value: 0.0
-Average: 0.0
-Std. dev.: 0.0
+Average: 0.0006860636929098981
+Std. dev.: 0.026183833492621166
 
 Feature: categorical_ice_pellets_yes1_no0_surface
-Max value: 0.0
+Max value: 1.0
 Min value: 0.0
-Average: 0.0
-Std. dev.: 0.0
+Average: 0.00030547226456155386
+Std. dev.: 0.01747509678826344
 
 Feature: categorical_rain_yes1_no0_surface
 Max value: 1.0
 Min value: 0.0
-Average: 0.09
-Std. dev.: 0.2876234912646613
+Average: 0.08854384646383012
+Std. dev.: 0.28408422808959644
 
 Feature: categorical_snow_yes1_no0_surface
 Max value: 1.0
 Min value: 0.0
-Average: 0.06
-Std. dev.: 0.23868325657594203
+Average: 0.027455684318930067
+Std. dev.: 0.16340708264318501
 
 Feature: convective_available_potential_energy_surface
-Max value: 2620.0
+Max value: 7160.0
 Min value: 0.0
-Average: 207.0
-Std. dev.: 486.30019410635526
+Average: 438.2306865114475
+Std. dev.: 897.6515247784854
 
 Feature: convective_inhibition_surface
-Max value: -0.65234375
-Min value: -202.65234375
-Average: -8.87234375
-Std. dev.: 30.74153574891828
+Max value: 10.7171630859375
+Min value: -1270.3416748046875
+Average: -11.585870085432866
+Std. dev.: 46.21815913426563
 
 Feature: direct_evaporation_cease_soil_moisture_surface
 Max value: 0.13499999046325684
 Min value: 0.0
-Average: 0.029712499007582664
-Std. dev.: 0.03685379752217062
+Average: 0.03110594852291435
+Std. dev.: 0.037380484131604996
 
 Feature: downward_long_wave_rad_flux_surface
-Max value: 431.0912780761719
-Min value: 141.09127807617188
-Average: 321.9587780761719
-Std. dev.: 62.296988016348685
+Max value: 519.33251953125
+Min value: 0.0
+Average: 335.87168615582425
+Std. dev.: 71.91861473035964
 
 Feature: downward_short_wave_rad_flux_surface
-Max value: 664.0
+Max value: 1121.1038818359375
 Min value: 0.0
-Average: 131.38625
-Std. dev.: 174.9622507039776
+Average: 190.75263160239342
+Std. dev.: 284.8060079314416
 
 Feature: drag_coefficient_surface
-Max value: 0.0
+Max value: 48000.0
 Min value: 0.0
-Average: 0.0
-Std. dev.: 0.0
+Average: 0.15554024185410378
+Std. dev.: 39.85484170220014
 
 Feature: friction_velocity_surface
-Max value: 0.8758659958839417
-Min value: 0.02586597390472889
-Average: 0.3311159858293831
-Std. dev.: 0.2278106005123383
+Max value: 2.4386146068573
+Min value: 7.477789040422067e-05
+Average: 0.3284759805524843
+Std. dev.: 0.2204706201407389
 
 Feature: geopotential_height_cloud_base
-Max value: 9865.5
+Max value: 14267.0
 Min value: -5000.0
-Average: 26.565
-Std. dev.: 3795.930430953841
+Average: -362.3657659567715
+Std. dev.: 3283.5747322967245
 
 Feature: geopotential_height_lltw
-Max value: 4459.78125
-Min value: -3469.21875
-Average: 1660.09625
-Std. dev.: 1842.4165258766086
+Max value: 6202.4365234375
+Min value: -8015.53125
+Average: 2141.460589701559
+Std. dev.: 1898.1221123820196
 
 Feature: geopotential_height_pblri
-Max value: 1938.927734375
-Min value: 22.67779541015625
-Average: 534.6852838134765
-Std. dev.: 528.5572856381282
+Max value: 5365.2919921875
+Min value: 13.405797958374023
+Average: 519.8203549129231
+Std. dev.: 514.536093836141
 
 Feature: geopotential_height_surface
-Max value: 2258.570068359375
-Min value: 0.0700225830078125
-Average: 200.59002151489258
-Std. dev.: 400.94056402556885
+Max value: 3576.320068359375
+Min value: -73.92997741699219
+Average: 321.18403584078413
+Std. dev.: 549.8004201177264
 
 Feature: geopotential_height_zerodegc_isotherm
-Max value: 5460.0
+Max value: 6326.55224609375
 Min value: 0.0
-Average: 2742.6
-Std. dev.: 1816.0199682967489
+Average: 3092.661752293876
+Std. dev.: 1753.1464658864122
 
 Feature: ice_cover_ice1_no_ice0_surface
 Max value: 1.0
 Min value: 0.0
-Average: 0.05
-Std. dev.: 0.2190429135575903
+Average: 0.02289247265273891
+Std. dev.: 0.14956072842575954
 
 Feature: land_cover_land1_sea0_surface
 Max value: 1.0
 Min value: 0.0
-Average: 0.46
-Std. dev.: 0.5009082659620331
+Average: 0.46817001205977116
+Std. dev.: 0.49898586947522006
 
 Feature: latent_heat_net_flux_surface
-Max value: 297.59210205078125
-Min value: -53.90791320800781
-Average: 47.75708709716797
-Std. dev.: 61.78915286896088
+Max value: 1000000.125
+Min value: -312.7490234375
+Average: 2500.6184335680878
+Std. dev.: 49249.48549856269
 
 Feature: lightning_surface
 Max value: 1.0
 Min value: 0.0
-Average: 0.01
-Std. dev.: 0.09999999999999998
+Average: 0.03504790049338119
+Std. dev.: 0.18390092827869525
 
 Feature: maximumcomposite_radar_reflectivity_entire_atmosphere
-Max value: 40.0
+Max value: 52.8125
 Min value: -20.0
-Average: -5.8725
-Std. dev.: 17.818192914472938
+Average: -7.287122246355333
+Std. dev.: 15.900977849622198
 
 Feature: mean_sea_level_pressure_nam_model_reduction_msl
-Max value: 102788.0
-Min value: 98520.0
-Average: 101349.11
-Std. dev.: 777.2117594908809
+Max value: 106000.0
+Min value: 94951.0
+Average: 101541.29552693132
+Std. dev.: 802.4057356789327
 
 Feature: number_of_soil_layers_in_root_zone_surface
 Max value: 4.0
 Min value: 0.0
-Average: 1.58
-Std. dev.: 1.7533805731624366
+Average: 1.5996940466767542
+Std. dev.: 1.7434935950250274
 
 Feature: planetary_boundary_layer_height_surface
-Max value: 5276.5
-Min value: 74.5
-Average: 1645.69
-Std. dev.: 1213.3549797852634
+Max value: 21114.0
+Min value: -1000000.0
+Average: -1075.3082378663123
+Std. dev.: 49332.54353623248
 
 Feature: plant_canopy_surface_water_surface
 Max value: 0.5
 Min value: 0.0
-Average: 0.08507499887607992
-Std. dev.: 0.17806105288972154
+Average: 0.060422839066438576
+Std. dev.: 0.1480723043352639
 
 Feature: precipitable_water_entire_atmosphere
-Max value: 44.58281326293945
-Min value: 1.0828148126602173
-Average: 17.945314816236497
-Std. dev.: 11.404169176281634
+Max value: 96.56735229492188
+Min value: 0.413043737411499
+Average: 21.60823007175919
+Std. dev.: 14.043820227481033
 
 Feature: pressure_maximum_wind
-Max value: 39926.734375
-Min value: 11126.736328125
-Average: 20100.73623046875
-Std. dev.: 6545.977306919039
+Max value: 50128.13671875
+Min value: 11120.640625
+Average: 22274.72372442975
+Std. dev.: 7195.950880388055
 
 Feature: pressure_reduced_to_msl_msl
-Max value: 102788.0
-Min value: 98514.0
-Average: 101362.48
-Std. dev.: 781.0997618613126
+Max value: 106272.0
+Min value: 94951.0
+Average: 101574.21354343016
+Std. dev.: 790.8951387655161
 
 Feature: pressure_surface
-Max value: 102787.0
-Min value: 78016.0
-Average: 99046.38
-Std. dev.: 4558.024806532945
+Max value: 105153.0
+Min value: 64793.0
+Average: 97921.93197108616
+Std. dev.: 6044.402231989741
 
 Feature: pressure_tropopause
-Max value: 33382.23828125
-Min value: 9182.23828125
-Average: 19710.23828125
-Std. dev.: 6883.475748765181
+Max value: 50103.296875
+Min value: 6653.146484375
+Average: 18644.448375531134
+Std. dev.: 7533.655032286372
 
 Feature: relative_humidity_zerodegc_isotherm
 Max value: 100.0
 Min value: 1.0
-Average: 53.53
-Std. dev.: 32.77639425260228
+Average: 52.952279718602874
+Std. dev.: 31.92960299721519
 
 Feature: sensible_heat_net_flux_surface
-Max value: 236.67236328125
-Min value: -57.07763671875
-Average: 11.14736328125
-Std. dev.: 44.21273683549627
+Max value: 1000000.125
+Min value: -317.9658203125
+Average: 2460.591012176307
+Std. dev.: 49251.43240969161
 
 Feature: snow_cover_surface
 Max value: 100.0
 Min value: 0.0
-Average: 25.0
-Std. dev.: 43.51941398892446
+Average: 16.340825082251783
+Std. dev.: 36.910389053177084
 
 Feature: snow_depth_surface
-Max value: 2.128000020980835
+Max value: 16.647199630737305
 Min value: 0.0
-Average: 0.09450799790618475
-Std. dev.: 0.2866969536458589
+Average: 0.040932397917521
+Std. dev.: 0.16044982192655047
 
 Feature: soil_porosity_surface
 Max value: 0.5
 Min value: 0.0
-Average: 0.23
-Std. dev.: 0.25045413298101654
+Average: 0.23408500602988558
+Std. dev.: 0.24949293473761003
 
 Feature: soil_type_as_in_zobler_surface
 Max value: 16.0
 Min value: 0.0
-Average: 2.25
-Std. dev.: 3.1634752658390988
+Average: 2.439781258915775
+Std. dev.: 3.185327619534401
 
 Feature: surface_roughness_surface
 Max value: 2.7500159740448
 Min value: 1.5900002836133353e-05
-Average: 0.4992659015478057
-Std. dev.: 0.846565071035368
+Average: 0.4835673709973284
+Std. dev.: 0.8124727164819947
 
 Feature: surface_wind_gust_surface
-Max value: 22.908788681030273
-Min value: 0.6587895154953003
-Average: 7.128789564371109
-Std. dev.: 4.654106350419142
+Max value: 54.797950744628906
+Min value: 0.0019546858966350555
+Average: 6.847739082294093
+Std. dev.: 4.461517224744664
 
 Feature: temperature_surface
-Max value: 306.4980163574219
-Min value: 247.49801635742188
-Average: 284.9017663574219
-Std. dev.: 13.002025568205235
+Max value: 329.73193359375
+Min value: 219.7428436279297
+Average: 287.31614237331695
+Std. dev.: 14.097624763089414
 
 Feature: temperature_tropopause
-Max value: 227.60687255859375
-Min value: 193.23187255859375
-Average: 210.80562255859374
-Std. dev.: 8.212131773796742
+Max value: 260.5533447265625
+Min value: 184.60946655273438
+Average: 210.0485875405655
+Std. dev.: 9.712765499794315
 
 Feature: total_cloud_cover_entire_atmosphere
 Max value: 100.0
-Min value: 0.0
-Average: 57.96
-Std. dev.: 45.57509509512067
+Min value: -1.0000036264390164e+20
+Average: -2.4317596621381523e+17
+Std. dev.: 4.925296609040394e+18
 
 Feature: upward_long_wave_rad_flux_surface
-Max value: 499.9310302734375
-Min value: 212.93104553222656
-Average: 371.75728118896484
-Std. dev.: 62.29572689430119
+Max value: 669.976806640625
+Min value: 0.0
+Average: 384.21388734234324
+Std. dev.: 70.9512226919964
 
 Feature: upward_short_wave_rad_flux_surface
-Max value: 101.0
+Max value: 740.67431640625
 Min value: 0.0
-Average: 17.8025
-Std. dev.: 22.273021655960125
+Average: 28.2053758189692
+Std. dev.: 54.77719372533869
 
 Feature: vegetation_surface
-Max value: 67.0
+Max value: 99.0
 Min value: 0.0
-Average: 9.585
-Std. dev.: 16.550817825928444
+Average: 15.446288548990092
+Std. dev.: 24.53112388808062
 
 Feature: vegitation_type_as_in_sib_surface
-Max value: 18.0
+Max value: 19.0
 Min value: 0.0
-Average: 3.5
-Std. dev.: 5.254146991287987
+Average: 3.4795825742782363
+Std. dev.: 5.111687219984822
 
 Feature: visibility_surface
-Max value: 24221.587890625
-Min value: 21.588850021362305
-Average: 20941.58804655075
-Std. dev.: 7445.64104615157
+Max value: 24307.435546875
+Min value: 17.29292869567871
+Average: 21715.863747614734
+Std. dev.: 6142.599331655297
 
 Feature: water_equiv_of_accum_snow_depth_surface
-Max value: 1321.0
+Max value: 5649.0
 Min value: 0.0
-Average: 29.28
-Std. dev.: 137.3906970517423
+Average: 8.035800387291186
+Std. dev.: 37.34503968059726
 
 Feature: wilting_point_surface
 Max value: 0.13499999046325684
 Min value: 0.0
-Average: 0.029712499007582664
-Std. dev.: 0.03685379752217062
+Average: 0.03110594852291435
+Std. dev.: 0.037380484131604996
 ```

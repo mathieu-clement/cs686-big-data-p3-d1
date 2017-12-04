@@ -81,11 +81,15 @@ The results:
 |December|55.37|
 
 This looks very incorrect, not at all what I found in project 2.
+That's because I forgot to bound my query to the Bay Area. Duh!
 
-So I ran it using the map and reduce paradigm:
+Since this was so slow, I ran it using the map and reduce paradigm, and threw a filter in there:
 
 ```python
+prefixes = ("9q8u", "9q8v", "9q8y", "9q8z", "9q9h", "9q9j", "9q9k", "9q9m", "9q9n", "9q9p")
+
 df.rdd\
+    .filter(lambda row: row.Geohash.startswith(prefixes))\
     .map(lambda row: (timestamp_to_month(row.Timestamp), row.relative_humidity_zerodegc_isotherm))\
     .reduceByKey(lambda humidity1, humidity2: (humidity1 + humidity2)/2.0)\
     .collect()
@@ -95,20 +99,20 @@ and obtained this:
 
 |Month|Average humidity|
 |---|---:|
-|January|58.70|
-|February|59.31|
-|March|24.40|
-|April|61.97|
-|May|45.90|
-|June|64.49|
-|July|84.40|
-|August|65.06|
-|September|77.16|
-|October|74.16|
-|November|70.41|
-|December|52.28|
+|January  |32.79|
+|February |15.00|
+|March    |19.08|
+|April    |21.90|
+|May      |19.36|
+|June     |35.50|
+|July     |27.29|
+|August   |23.12|
+|September|28.72|
+|October  |36.10|
+|November |47.33|
+|December |68.04|
 
-That's better!
+Now, that's better. Although the numbers are not the same as in project 2, probably because this comes from a sample, the general trend is the same, and we also find that the driest month of the year is around the end of the winter, though this time in February rather than March.
 
 ### A Year of Travel
 

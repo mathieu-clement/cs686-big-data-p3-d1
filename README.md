@@ -228,12 +228,12 @@ I wrote this section in the form of pros and cons for each framework, **regardin
    
 #### Cons of MapReduce
 
-    * Files, compilation, ...
-    * Java-only, Python supported only through pipes, so no access to API
-    * Requires a main() method (=> Job class)
-    * Cannot look at intermediary results
-    * Couldn't use my own Writable (Out of Memory errors)
-    * Comes with very little, might need boilerplate to do common operations
+   * Files, compilation, ...
+   * Java-only, Python supported only through pipes, so no access to API
+   * Requires a main() method (=> Job class)
+   * Cannot look at intermediary results
+   * Couldn't use my own Writable (Out of Memory errors)
+   * Comes with very little, might need boilerplate to do common operations
 
 ## Statistics for each feature
 

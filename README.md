@@ -67,7 +67,7 @@ The results:
 
 |Month|Average humidity|
 |---|---:|
-|January|[57.48|
+|January|57.48|
 |February|54.57|
 |March|52.70|
 |April|54.42|
@@ -82,9 +82,41 @@ The results:
 
 This looks very incorrect, not at all what I found in project 2.
 
+So I ran it using the map and reduce paradigm:
+
+```python
+df.rdd\
+    .map(lambda row: (timestamp_to_month(row.Timestamp), row.relative_humidity_zerodegc_isotherm))\
+    .reduceByKey(lambda humidity1, humidity2: (humidity1 + humidity2)/2.0)\
+    .collect()
+```
+
+and obtained this:
+
+|Month|Average humidity|
+|---|---:|
+|January|58.70|
+|February|59.31|
+|March|24.40|
+|April|61.97|
+|May|45.90|
+|June|64.49|
+|July|84.40|
+|August|65.06|
+|September|77.16|
+|October|74.16|
+|November|70.41|
+|December|52.28|
+
+That's better!
+
 ### A Year of Travel
 
 ### Hottest Temperature
+
+Here I used an SQL to find the maximum temperature, 329 K, which happens to be d59eknqv867b, a place about a 2.5 hour drive from Cancun, Mexico, which is also what I found in Project 2.
+
+### Overview of my experience
 
 ## Statistics for each feature
 

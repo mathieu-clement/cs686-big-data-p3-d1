@@ -89,12 +89,7 @@ This looks very incorrect, not at all what I found in project 2.
 ## Statistics for each feature
 
 ```python
-df = rdd.toDF()
-cols = df.columns
-
-#df.select(df.columns[0]).show()
-
-for col in sorted(cols[2:]):
+for col in sorted(df.columns[2:]):
     try:
         row = spark.sql('SELECT MAX(%s), MIN(%s), AVG(%s), STDDEV(%s) FROM TEMP_DF' % (col, col, col, col)).collect()[0]
         print('Feature:', col)

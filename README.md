@@ -190,6 +190,10 @@ and this returned the following results:
 
 Here I used an SQL to find the maximum temperature, 329 K, at d59eknqv867b, a place about a 2.5 hour drive from Cancun, Mexico, which is also what I found in Project 2.
 
+```python
+rows = spark.sql('SELECT Geohash, MAX(temperature_surface) FROM TEMP_DF GROUP BY Geohash').collect()
+```
+
 ### Overview of my experience
 
 I wrote this section in the form of pros and cons for each framework, **regarding this question only.**

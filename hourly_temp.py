@@ -5,7 +5,7 @@ X_FACTOR = 2
 LEFT_MARGIN = 30
 Y_FACTOR = 20
 BOTTOM_MARGIN = 10
-im = Image.new("RGB", (LEFT_MARGIN + X_FACTOR * (7*31 + 4*30 + 28) + 1, Y_FACTOR * 4 + BOTTOM_MARGIN))
+im = Image.new("RGB", (LEFT_MARGIN + X_FACTOR * (7*31 + 4*30 + 28) + 1, Y_FACTOR * 4 + BOTTOM_MARGIN + 5))
 width, height = im.size
 pix = im.load()
 
@@ -24,7 +24,7 @@ for i in range(width):
 
 # Ticks on X-axis
 prev = LEFT_MARGIN
-for x in months:
+for x in months[:-1]:
     prev += X_FACTOR * x
     for y in range(BOTTOM_MARGIN):
         pix[prev, Y_FACTOR * 4 + y] = (255,0,0)
@@ -111,6 +111,6 @@ month_names = [None, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Se
 for m, acc in enumerate(accum):
     if m == 0:
         continue
-    draw.text ( (LEFT_MARGIN + X_FACTOR * accum[m] + 1, Y_FACTOR * 4), month_names[m], (255,0,0), font=font)
+    draw.text ( (LEFT_MARGIN + X_FACTOR * accum[m] + 2, Y_FACTOR * 4), month_names[m], (255,0,0), font=font)
 
 im.save(sys.argv[1] + '.png', "PNG")

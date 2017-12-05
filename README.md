@@ -523,7 +523,7 @@ with open('/tmp/temps.txt', 'w') as filew:
         filew.write("%d %d %d %d %f\n" % (t[0][0], t[0][1], t[0][2], t[0][3], t[1]))
  ```
  
- I quickly realized that this was not going to cut it, and thus used the larger sample this time.
+ I quickly realized that this was not going to cut it, and thus used the larger sample this time, which brought the computation time from 1 to 65 minutes.
  
  This file allowed me to look at the distribution for my particular location:
  

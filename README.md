@@ -470,8 +470,8 @@ This particular example shows the temperature in San Francisco. The sudden shift
 
 Essentially we will have two axes:
 
-   x: day of the year
-   y: time during the day
+   - x: day of the year
+   - y: time during the day
    
 Unfortunately I already know that we are never going to able to generate anything as pretty as above, because the NAM dataset only contains a few measurements per day, or does it?
 
@@ -551,7 +551,7 @@ I'll thus define 4 "buckets":
    1. 0:00 - 6:00
    2. 6:00 - 12:00
    3. 12:00 - 18:00
-   4: 18:00 - 24:00
+   4. 18:00 - 24:00
    
 The number of samples for each buckets is roughly the same, which should avoid missing data, i.e. white pixels in the final image.
 

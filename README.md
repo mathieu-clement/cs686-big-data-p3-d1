@@ -350,3 +350,25 @@ Here are a few examples of correlated variables:
 |snow_cover_surface|temperature_tropopause|0.365|
 |ice_cover_ice1_no_ice0_surface|snow_cover_surface|0.347|
 |categorical_snow_yes1_no0_surface|snow_cover_surface|0.3|
+
+## Machine learning
+
+My water station is broken and cannot measure accumulated water (rain) anymore. I'd like to predict, given the presence of lightning, the humidity, and wind gusts, whether it is raining or not. This is a binary question.
+
+Feature to predict:
+
+   - categorical_rain_yes1_no0_surface
+   
+Features used to train the model:
+
+   - maximumcomposite_radar_reflectivity_entire_atmosphere
+   - relative_humidity_zerodegc_isotherm
+   - surface_wind_gust_surface
+   
+Data partionning:
+
+    70 / 30
+    
+Why the model makes sense:
+
+    First of all, what model? 

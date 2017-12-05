@@ -1,4 +1,4 @@
-from PIL import Image
+from PIL import Image, ImageFont, ImageDraw
 import sys
 
 X_FACTOR = 2
@@ -35,6 +35,7 @@ for x in range(LEFT_MARGIN):
     for h in range(4+1):
         pix[x, h * Y_FACTOR] = (0, 0, 0)
 
+# Helps to find y pixel for a particular hour of the day
 def hour_bucket(hour):
     if hour < 6:
         return 0
@@ -45,7 +46,7 @@ def hour_bucket(hour):
     else:
         return 3
 
-
+# Colors depending on temperature
 SWELTERING = (150, 75, 70) # red brown
 HOT = (174, 91, 91) # red pink
 WARM = (198, 117, 98) # red orange
@@ -82,6 +83,7 @@ def temp_color(t):
         return SWELTERING
 
 
+# Draw data
 with open(sys.argv[1], 'r') as filer:
     for line in filer:
         line = line[:-1] # get rid of CR or LF at end of line

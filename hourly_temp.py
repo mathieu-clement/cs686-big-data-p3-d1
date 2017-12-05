@@ -2,7 +2,7 @@ from PIL import Image, ImageFont, ImageDraw
 import sys
 
 X_FACTOR = 2
-LEFT_MARGIN = 10
+LEFT_MARGIN = 30
 Y_FACTOR = 20
 BOTTOM_MARGIN = 10
 im = Image.new("RGB", (LEFT_MARGIN + X_FACTOR * (7*31 + 4*30 + 28) + 1, Y_FACTOR * 4 + BOTTOM_MARGIN))
@@ -98,5 +98,19 @@ with open(sys.argv[1], 'r') as filer:
             for y in range(Y_FACTOR):
                 pix[LEFT_MARGIN + X_FACTOR * (accum[m] + (d-1)) + x, Y_FACTOR * hour_bucket(h) + y] = temp_color(temp)
 
-#im.save("test.png", "PNG")
-im.show()
+
+draw = ImageDraw.Draw(im)
+font = ImageFont.truetype('/Library/Fonts/Arial.ttf', 10)
+draw.text( (0, 0), '0:00', (0,0,0), font=font)
+draw.text( (0, Y_FACTOR * 1), '6:00', (0,0,0), font=font)
+draw.text( (0, Y_FACTOR * 2), '12:00', (0,0,0), font=font)
+draw.text( (0, Y_FACTOR * 3), '18:00', (0,0,0), font=font)
+draw.text( (0, Y_FACTOR * 4), '24:00', (0,0,0), font=font)
+
+month_names = [None, 'Jan', 'Feb', 'Mar', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec']
+for m, acc in enumerate(accum):
+    if m == 0:
+        continue
+    draw.text ( (LEFT_MARGIN + X_FACTOR * accum[m] + 1, Y_FACTOR * 4), month_names[m], (255,0,0), font=font)
+
+im.save(sys.argv[1] + '.png', "PNG")

@@ -254,3 +254,99 @@ for col in sorted(df.columns[2:]):
 [Aggregate functions](http://spark.apache.org/docs/latest/api/scala/index.html#org.apache.spark.sql.functions$) (here used through SQL) came in handy.
 
 [Here is the report.](/feature_statistics.txt)
+
+## Pearson Correlation Coefficient
+
+To generate the [matrix](/pcc.txt):
+
+```python
+import numpy as np
+from pyspark.mllib.stat import Statistics
+from pyspark.ml.feature import VectorAssembler
+from pyspark.mllib.linalg import Vectors
+
+assembler = VectorAssembler(inputCols=df.columns[2:], outputCol="features")
+df_features = assembler.transform(df).select('features')
+
+data = df_features.rdd.map(lambda row: Vectors.dense([x for x in row['features']]))
+print(data)
+
+corr = Statistics.corr(data, method="pearson")
+import sys
+for f in corr:
+    for g in f:
+        sys.stdout.write("%.3f" % g)
+        sys.stdout.write(' ')
+    sys.stdout.write('\n')
+```
+
+![matrix image](/pcc.svg)
+
+Actually displaying the features required a bit more work. I'm sure there's a one-liner for this, but here's my solution:
+
+```python
+import functools
+
+@functools.total_ordering
+class PCCFeatureTuple(object):
+    def __init__(self, feat_x, feat_y, pcc):
+        self.feat_x = feat_x
+        self.feat_y = feat_y
+        self.pcc = pcc
+        
+    def __hash__(self):
+        if self.feat_x < self.feat_y:
+            a = self.feat_x
+            b = self.feat_y
+        else:
+            a = self.feat_y
+            b = self.feat_x
+
+        return hash((a, b))
+    
+    def __eq__(self, other):
+        return (self.feat_x == other.feat_x and self.feat_y == other.feat_y) or \
+               (self.feat_x == other.feat_y and self.feat_y == other.feat_x)
+    
+    def __lt__(self, other):
+        return self.pcc < other.pcc
+    
+    def __repr__(self):
+        return 'PCCFeatureTuple(%d, %d, %f)' % (self.feat_x, self.feat_y, self.pcc)
+    
+    # call tuple(obj) to get (feat_x, feat_y, pcc)
+    def __iter__(self):
+        for i in [self.feat_x, self.feat_y, self.pcc]:
+            yield i
+    
+tuples = []
+    
+# Note: coor does not contain Geohash and Timestamp, and thus all indices are shifted by 2
+    
+for feat_x, coeffs in enumerate(corr):
+    for feat_y, pcc in enumerate(coeffs):
+        tuples.append(PCCFeatureTuple(feat_x+2, feat_y+2, pcc))
+        
+tuples = set(tuples)
+        
+for t in [t for t in sorted(tuples, reverse=True) if t.feat_x != t.feat_y]:
+    print(((t.feat_x, (df.columns[t.feat_x])), (t.feat_y, (df.columns[t.feat_y])), t.pcc))
+```
+
+The result of this script [can be found here](/pcc_galore.txt).
+
+Here are a few examples of correlated variables:
+
+|Feature A|Feature B|PCC|
+|---|---|---:|
+|wilting_point_surface|direct_evaporation_cease_soil_moisture_surface|1.0|
+|sensible_heat_net_flux_surface|latent_heat_net_flux_surface|1.0|
+|land_cover_land1_sea0_surface|number_of_soil_layers_in_root_zone_surface|0.978|
+|component_of_wind_maximum_wind|component_of_wind_tropopause|0.92|
+|water_equiv_of_accum_snow_depth_surface|snow_depth_surface|0.889|
+|snow_cover_surface|snow_depth_surface|0.578|
+|lightning_surface|maximumcomposite_radar_reflectivity_entire_atmosphere|0.373|
+|snow_depth_surface|pressure_tropopause|0.367|
+|snow_cover_surface|temperature_tropopause|0.365|
+|ice_cover_ice1_no_ice0_surface|snow_cover_surface|0.347|
+|categorical_snow_yes1_no0_surface|snow_cover_surface|0.3|

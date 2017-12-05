@@ -524,3 +524,37 @@ with open('/tmp/temps.txt', 'w') as filew:
  ```
  
  I quickly realized that this was not going to cut it, and thus used the larger sample this time.
+ 
+ This file allowed me to look at the distribution for my particular location:
+ 
+ ```bash
+ awk '{print $4;}' hourly_temps.txt | python2.7 data_hacks/histogram.py
+# NumSamples = 2167; Min = 4.00; Max = 23.00
+# Mean = 13.678357; Variance = 45.493685; SD = 6.744901; Median 16.000000
+# each ∎ represents a count of 7
+    4.0000 -     5.9000 [   548]: ∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+    5.9000 -     7.8000 [     0]: 
+    7.8000 -     9.7000 [     0]: 
+    9.7000 -    11.6000 [   530]: ∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+   11.6000 -    13.5000 [     0]: 
+   13.5000 -    15.4000 [     0]: 
+   15.4000 -    17.3000 [   541]: ∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+   17.3000 -    19.2000 [     0]: 
+   19.2000 -    21.1000 [     0]: 
+   21.1000 -    23.0000 [   548]: ∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎∎
+```
+
+(data_hacks is from the github repository of the same name)
+
+I'll thus define 4 "buckets":
+
+   1. 0:00 - 6:00
+   2. 6:00 - 12:00
+   3. 12:00 - 18:00
+   4: 18:00 - 24:00
+   
+The number of samples for each buckets is roughly the same, which should avoid missing data, i.e. white pixels in the final image.
+
+I then [wrote a script](/hourly_temp.py) to generate the hourly temperature graph for the city of San Francisco:
+
+![hourly temperatures SF](/hourly_temps.txt.png)

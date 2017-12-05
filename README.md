@@ -558,3 +558,7 @@ The number of samples for each buckets is roughly the same, which should avoid m
 I then [wrote a script](/hourly_temp.py) to generate the hourly temperature graph for the city of San Francisco:
 
 ![hourly temperatures SF](/hourly_temps.txt.png)
+
+The graph for Albuquerque is more interesting:
+
+![hourly temperatures Albuquerque](/hourly_temps_albuquerque.txt.png)

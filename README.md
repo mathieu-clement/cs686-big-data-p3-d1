@@ -355,20 +355,98 @@ Here are a few examples of correlated variables:
 
 My water station is broken and cannot measure accumulated water (rain) anymore. I'd like to predict, given the presence of lightning, the humidity, and wind gusts, whether it is raining or not. This is a binary question.
 
-Feature to predict:
+### Feature to predict
 
    - categorical_rain_yes1_no0_surface
    
-Features used to train the model:
+### Features used to train the model
 
    - maximumcomposite_radar_reflectivity_entire_atmosphere
    - relative_humidity_zerodegc_isotherm
    - surface_wind_gust_surface
    
-Data partionning:
+### Data partioning
 
-    70 / 30
-    
-Why the model makes sense:
+   80 / 20
+   
+### Linear regression and code   
+   
+```python
+from pyspark.ml.linalg import DenseVector
+from pyspark.ml.feature import StandardScaler
+from pyspark.ml.regression import LinearRegression
 
-    First of all, what model? 
+# Select our features
+# First is the one we want to predict, a.k.a. label
+df2 = df.select(
+          'categorical_rain_yes1_no0_surface',
+          'maximumcomposite_radar_reflectivity_entire_atmosphere',
+          'relative_humidity_zerodegc_isotherm',
+)
+
+# Refactor our data and createa new DataFrame
+input_data = df2.rdd.map(lambda x: (x[0], DenseVector(x[1:])))
+df3 = spark.createDataFrame(input_data, ["label", "features"])
+
+# Apply scaling
+standardScaler = StandardScaler(inputCol="features", outputCol="features_scaled")
+
+# Fit and transform the DataFrame to the scaler
+scaler = standardScaler.fit(df3)
+scaled_df = scaler.transform(df3)
+
+# Split the data into train and test sets
+train_data, test_data = scaled_df.randomSplit([.8,.2],seed=686)
+
+# Create a model for linear regression
+lr = LinearRegression(labelCol="label", maxIter=10, regParam=0.4, elasticNetParam=0.7)
+
+# Training
+linearModel = lr.fit(train_data)
+```
+
+So that gives us our model.
+
+We can test it:
+
+```python
+# Predict the label on the test data
+predicted = linearModel.transform(test_data)
+
+print(linearModel.summary.rootMeanSquaredError) #  => 0.2840971511300388
+print(linearModel.summary.r2) # => 1e-12
+```
+
+RMSE is not too high.
+
+R2 (coefficient of determination) tells us how close the data is to the regression line. This results here indicates that the model doesn't indicate the variability of the data around its mean.
+
+We can run some more statistics:
+
+```python
+from pyspark.mllib.evaluation import BinaryClassificationMetrics
+metrics = BinaryClassificationMetrics(predictionAndLabel)
+
+# Area under precision-recall curve
+print("Area under PR = %s" % metrics.areaUnderPR) # => 0.5442540036733158
+
+# Area under ROC curve
+print("Area under ROC = %s" % metrics.areaUnderROC) # => 0.5
+```
+
+I don't know much about the subject, but I believe this means our predictions are terrible, since a random classifier would be just as accurate.
+
+### Random Forest
+
+We can replace our model with Random Forest:
+
+```python
+from pyspark.ml.classification import RandomForestClassifier
+rf = RandomForestClassifier(labelCol="label", featuresCol="features_scaled", numTrees=10)
+```
+
+We can look at the importances of the chosen features:
+
+```python
+print(model.featureImportances) # => {0: 0.9441, 1: 0.0527, 2: 0.0032}
+```

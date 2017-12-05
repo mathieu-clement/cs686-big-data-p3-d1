@@ -450,3 +450,77 @@ We can look at the importances of the chosen features:
 ```python
 print(model.featureImportances) # => {0: 0.9441, 1: 0.0527, 2: 0.0032}
 ```
+
+This time we get:
+
+    Area under PR = 0.7490234053634712
+    Area under ROC = 0.8513364171303207
+    
+Now that's much better!
+
+## Data visualization
+
+The website [WeatherSpark](weatherspark.com) is super cool, and gives you a good idea what the weather is going to be like any time of the year, by looking at general tendencies.
+
+The plots in particular are really nice. Take this one for example, that I really like:
+
+![hourly temperature](weatherspark_sf_hourly_temp.png)
+
+This particular example shows the temperature in San Francisco. The sudden shift between day and night is due to daylight savings.
+
+Essentially we will have two axes:
+
+   x: day of the year
+   y: time during the day
+   
+Unfortunately I already know that we are never going to able to generate anything as pretty as above, because the NAM dataset only contains a few measurements per day, or does it?
+
+Our first task will be to verify that. The approach I will be taking is to count how many different timestamps we have and divide that value by 365 (since our dataset is a very small sample of the *year* 2015), which should give us a rough good estimate of the number of measurements per day present in the original dataset:
+
+```python
+df.select('Timestamp').distinct().count() / 365 # => 3.375
+```
+
+a little more than 3 per day. That's not much, but it should work for the purposes of our exercise. 
+Now the second question is... what time of the day were the measurements taken?
+
+```python
+def timestamp_to_hour(ts):
+    return datetime.datetime.fromtimestamp(ts / 1e3).hour
+
+df\
+    .sample(False, 0.1)\
+    .select('Timestamp')\
+    .rdd\
+    .map(lambda row: timestamp_to_hour(row.Timestamp))\
+    .distinct()\
+    .collect()
+```
+
+This gives us: `[11, 23, 5, 17, 10, 22, 16, 4]` and it is rather annoying because that's not at all what I thought it would be. So we will have to work around that.
+
+I want to write the following to a file: `(date, temperature)`
+
+And for this I ran this job:
+
+```java
+def to_datetime_tuple(ts):
+    dt = datetime.datetime.fromtimestamp(ts / 1e3)
+    return (dt.year, dt.month, dt.day, dt.hour)
+
+prefix = '9q8y' # City of San Francisco
+
+temps = df\
+    .select('Timestamp', 'Geohash', 'temperature_surface')\
+    .rdd\
+    .filter(lambda row: row.Geohash.startswith(prefix))\
+    .map(lambda row: (to_datetime_tuple(row.Timestamp), row.temperature_surface))\
+    .sortByKey()\
+    .collect()
+    
+with open('/tmp/temps.txt', 'w') as filew:
+    for t in temps:
+        filew.write("%d %d %d %d %f\n" % (t[0][0], t[0][1], t[0][2], t[0][3], t[1]))
+ ```
+ 
+ I quickly realized that this was not going to cut it, and thus used the larger sample this time.
